@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setLoggedIn } from "./Status";
 
 export default function Registration() {
   const [formData, setFormData] = useState({
@@ -149,8 +150,10 @@ export default function Registration() {
         // Registration successful, redirect to the dashboard
         const result = await response.json();
         console.log(result);
+        setLoggedIn();
         // Redirect to the dashboard
         history('/dashboard');
+        window.location.reload();
       } else {
         // Registration failed, handle error
         const result = await response.json();

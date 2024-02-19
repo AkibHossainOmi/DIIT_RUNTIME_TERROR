@@ -67,11 +67,11 @@ export default function Login() {
             // const data = await response.json();
 
             if (response.ok) {
+                setLoggedIn();
                 // Login successful
                 console.log("Successful Login");    
-                setLoggedIn();
-                console.log(isLoggedIn());
                 history('/dashboard');
+                window.location.reload();
                 // You can perform redirection or set some state to indicate successful login
             } else {
                 // Login failed
