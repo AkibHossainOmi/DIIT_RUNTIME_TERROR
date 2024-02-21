@@ -144,11 +144,8 @@ export default function Login() {
                             <p className="mt-1 text-xs text-red-500">{errors.password}</p>
                         )}
                     </div>
-                    <a
-                        href="sendmail"
-                        className="text-xs text-purple-600 hover:underline"
-                    >
-                        Forget Password?
+                    <a href="/forgot-password" className="text-xs text-purple-600 hover:underline">
+                        Forgot Password?
                     </a>
                     <div className="mt-6">
                         <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
