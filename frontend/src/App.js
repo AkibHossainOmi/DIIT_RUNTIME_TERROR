@@ -6,6 +6,7 @@ import Dashboard from './Components/Dashboard';
 import { isLoggedIn } from './Components/Status';
 import ForgotPassword from './ForgotPassword';
 import TrainList from './Components/TrainList';
+import Home from './Components/home';
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
           />
           <Route
             path="/"
-            element={!isLoggedIn() ? <Login /> : <Navigate to="/dashboard" />}
+            element={!isLoggedIn() ? <Home /> : <Navigate to="/dashboard" />}
           />
           <Route
             path="/registration"
