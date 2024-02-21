@@ -4,6 +4,7 @@ import Login from './Components/Login';
 import Registration from './Components/Registration';
 import Dashboard from './Components/Dashboard';
 import { isLoggedIn } from './Components/Status';
+import ForgotPassword from './ForgotPassword';
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
           <Route
             path="/login"
             element={!isLoggedIn() ? <Login /> : <Navigate to="/dashboard" />}
+          />
+          <Route 
+            path="/forgot-password" 
+            element={<ForgotPassword />} 
           />
           <Route
             path="/"
