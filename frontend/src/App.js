@@ -5,6 +5,7 @@ import Registration from './Components/Registration';
 import Dashboard from './Components/Dashboard';
 import { isLoggedIn } from './Components/Status';
 import ForgotPassword from './ForgotPassword';
+import TrainList from './Components/TrainList';
 
 function App() {
   return (
@@ -21,7 +22,11 @@ function App() {
           />
           <Route 
             path="/forgot-password" 
-            element={<ForgotPassword />} 
+            element={!isLoggedIn() ? <ForgotPassword /> : <Navigate to="/dashboard" />} 
+          />
+          <Route 
+            path="/trains" 
+            element={isLoggedIn() ? <TrainList /> : <Navigate to="/login" />} 
           />
           <Route
             path="/"
