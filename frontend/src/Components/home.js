@@ -29,7 +29,9 @@ export default function Home() {
           <Link to="/trains" className="text-white hover:underline">
             Trains
           </Link>
-          
+          <Link to="/stations" className="text-white hover:underline">
+            Stations
+          </Link>
           {/* Add more links as needed */}
         </div>
         {/* You can add additional elements to the navbar, such as a logo or user profile */}
