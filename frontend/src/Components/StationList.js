@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar";
 
 export const StationList = () => {
   const [stations, setStations] = useState([]);
@@ -9,7 +10,7 @@ export const StationList = () => {
         const response = await fetch("http://localhost:8000/api/stations");
         if (response.ok) {
           const result = await response.json();
-          const stationsData = result.stations || []; // Extract stations array or use an empty array
+          const stationsData = result.stations || []; 
           setStations(stationsData);
         } else {
           console.error("Failed to fetch stations");
@@ -20,11 +21,13 @@ export const StationList = () => {
     };
 
     fetchStations();
-  }, []); // empty dependency array means this effect runs once after the initial render
+  }, []); 
 
   return (
-    <div className="max-w-screen-xl mx-auto ml-5">
-      <h1 className="text-3xl font-semibold text-left pl-4 text-purple-700 underline">
+    <>
+    <Navbar/>
+    <div className="max-w-screen-xl mx-auto ml-12">
+      <h1 className="mt-20 text-3xl font-semibold text-left pl-4 text-purple-700 underline">
         Station List
       </h1>
       {stations.length > 0 ? (
@@ -49,11 +52,12 @@ export const StationList = () => {
           </table>
         </div>
       ) : (
-        <p className="mt-5" style={{ margin: "1%" }}>
+        <p className="mt-5 ml-5">
           No stations available.
         </p>
       )}
     </div>
+    </>
   );
 };
 

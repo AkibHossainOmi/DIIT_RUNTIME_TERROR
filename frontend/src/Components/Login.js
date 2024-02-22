@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { isLoggedIn, setLoggedIn } from './Status';
+import { setLoggedIn } from './Status';
+import Navbar from './Navbar';
 
 export default function Login() {
-    console.log(isLoggedIn());
+    
     const history = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
@@ -21,7 +22,6 @@ export default function Login() {
             [e.target.name]: e.target.value,
         });
 
-        // Reset validation errors when the user modifies the input
         setErrors({
             ...errors,
             [e.target.name]: "",
@@ -32,7 +32,6 @@ export default function Login() {
         let isValid = true;
         const { email, password } = formData;
 
-        // Validate email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             setErrors((prevErrors) => ({
@@ -42,7 +41,6 @@ export default function Login() {
             isValid = false;
         }
 
-        // Validate password
         if (!password.trim()) {
             setErrors((prevErrors) => ({
                 ...prevErrors,
@@ -58,23 +56,18 @@ export default function Login() {
         e.preventDefault();
 
         if (!validateForm()) {
-            // Stop login if there are validation errors
             return;
         }
 
         try {
             const response = await fetch(`http://localhost:8000/api/login?email=${formData.email}&password=${formData.password}`);
-            // const data = await response.json();
 
             if (response.ok) {
                 setLoggedIn();
-                // Login successful
                 console.log("Successful Login");    
                 history('/dashboard');
                 window.location.reload();
-                // You can perform redirection or set some state to indicate successful login
             } else {
-                // Login failed
                 if(response.status===404) {
                             setErrors((prevErrors) => ({
                         ...prevErrors,
@@ -88,17 +81,15 @@ export default function Login() {
                         password: "Invalid password",
                     }));
                 }
-                // console.error(data.error);
-                // Update state or display an error message to the user
             }
         } catch (error) {
             console.error("An error occurred during login:", error);
-            // Handle unexpected errors, e.g., network issues
         }
     };
 
     return (
         <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
+            <Navbar/>
             <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
                 <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                    Sign in

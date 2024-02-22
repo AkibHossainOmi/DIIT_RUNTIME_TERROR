@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setLoggedIn } from "./Status";
+import Navbar from "./Navbar";
 
 export default function Registration() {
   const [formData, setFormData] = useState({
@@ -25,7 +26,6 @@ export default function Registration() {
       [e.target.name]: e.target.value,
     });
 
-    // Reset validation errors when the user modifies the input
     setErrors({
       ...errors,
       [e.target.name]: "",
@@ -38,7 +38,6 @@ export default function Registration() {
       const result = await response.json();
       const userCredentials = result.userCredentials;
 
-      // Find the user with the given email
       const user = userCredentials.find((user) => user.email === email);
 
       return user;
@@ -52,7 +51,6 @@ export default function Registration() {
     let isValid = true;
     const { name, email, password, password_confirmation } = formData;
 
-    // Validate name
     if (!name.trim()) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -61,7 +59,6 @@ export default function Registration() {
       isValid = false;
     }
 
-    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setErrors((prevErrors) => ({
@@ -71,7 +68,6 @@ export default function Registration() {
       isValid = false;
     }
 
-    // Validate password length
     if (password.length < 8) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -88,7 +84,6 @@ export default function Registration() {
       isValid = false;
     }
 
-    // Validate password confirmation
     if (password !== password_confirmation) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -119,13 +114,11 @@ export default function Registration() {
     e.preventDefault();
 
     if (!validateForm()) {
-      // Stop registration if there are validation errors
       return;
     }
 
     const { email } = formData;
 
-    // Check if email is already registered
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
@@ -136,7 +129,6 @@ export default function Registration() {
       return;
     }
 
-    // Continue with registration logic if email is not registered
     try {
       const response = await fetch("http://localhost:8000/api/credentials", {
         method: "POST",
@@ -147,15 +139,12 @@ export default function Registration() {
       });
 
       if (response.ok) {
-        // Registration successful, redirect to the dashboard
         const result = await response.json();
         console.log(result);
         setLoggedIn();
-        // Redirect to the dashboard
         history('/dashboard');
         window.location.reload();
       } else {
-        // Registration failed, handle error
         const result = await response.json();
         console.error(result);
       }
@@ -166,6 +155,7 @@ export default function Registration() {
 
   return (
     <div>
+    <Navbar/>
       <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
         <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
           Register

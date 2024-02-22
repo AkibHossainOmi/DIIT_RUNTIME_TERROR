@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar";
 
 const TrainList = () => {
   const [stations, setStations] = useState([]);
@@ -59,21 +60,24 @@ const TrainList = () => {
 
   return (
     <div>
-      <h2>Trains at All Stations</h2>
-      {Array.isArray(dataForAllStations) &&
-        dataForAllStations.map(({ station_id, station_name, trains }) => (
-          <div key={station_id}>
-            <h3>{`Station ${station_id} - ${station_name}`}</h3>
-            <ul>
-              {Array.isArray(trains) &&
-                trains.map((train) => (
-                  <li key={train.train_id}>
-                    {`Train ID: ${train.train_id}, Arrival Time: ${train.arrival_time}, Departure Time: ${train.departure_time}`}
-                  </li>
-                ))}
-            </ul>
-          </div>
-        ))}
+      <Navbar/>
+      <div className="mt-20 ml-12">
+        <h2>Trains at All Stations</h2>
+        {Array.isArray(dataForAllStations) &&
+          dataForAllStations.map(({ station_id, station_name, trains }) => (
+            <div key={station_id}>
+              <h3>{`Station ${station_id} - ${station_name}`}</h3>
+              <ul>
+                {Array.isArray(trains) &&
+                  trains.map((train) => (
+                    <li key={train.train_id}>
+                      {`Train ID: ${train.train_id}, Arrival Time: ${train.arrival_time}, Departure Time: ${train.departure_time}`}
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
