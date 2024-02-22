@@ -38,12 +38,15 @@ export default function Navbar() {
                 <Link to="/" className="text-white text-lg hover:underline">
                 Home
                 </Link>
-                <Link to="/trains" className="text-white hover:underline">
+                <Link to="/trains" className="text-white text-lg hover:underline">
                 Trains
                 </Link>
-                <Link to="/stations" className="text-white hover:underline">
+                <Link to="/stations" className="text-white text-lg hover:underline">
                 Stations
                 </Link>
+                {isAuthenticated && <Link to="/dashboard" className="text-white text-lg hover:underline">
+                Dashboard
+                </Link>}
                 {/* Add more links as needed */}
             </div>
             {/* You can add additional elements to the navbar, such as a logo or user profile */}
