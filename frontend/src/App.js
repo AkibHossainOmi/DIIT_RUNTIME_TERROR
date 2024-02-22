@@ -8,6 +8,7 @@ import ForgotPassword from './ForgotPassword';
 import TrainList from './Components/TrainList';
 import Home from './Components/Home';
 import StationList from './Components/StationList';
+import Navbar from './Components/Navbar';
 
 function App() {
   const isAuthenticated = isLoggedIn();
@@ -16,28 +17,23 @@ function App() {
     <div className="font-roboto">
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/trains" element={<TrainList />} />
           <Route path="/stations" element={<StationList />} />
 
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <>
               <Route path="/dashboard" element={<Dashboard />} />
-              {/* <Route path="/login" element={<Home />} />
-              <Route path="/forgot-password" element={<Home />} />
-              <Route path="/registration" element={<Home />} /> */}
             </>
-          )}
-
-          {!isAuthenticated && (
+          ) : (
             <>
               <Route path="/login" element={<Login />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/registration" element={<Registration />} />
-              {/* <Route path="/dashboard" element={<Home />} /> */}
             </>
           )}
-
+          <Route path="*" element={<Navbar />} />
         </Routes>
       </BrowserRouter>
     </div>
