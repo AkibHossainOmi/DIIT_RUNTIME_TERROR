@@ -9,7 +9,7 @@ import TrainList from './Components/TrainList';
 import Home from './Components/Home';
 import StationList from './Components/StationList';
 import Navbar from './Components/Navbar';
-import MyProfile from './Components/Profile';
+import Profile from './Components/Profile';
 
 function App() {
   const isAuthenticated = getLoggedInStatus();
@@ -26,7 +26,7 @@ function App() {
           {isAuthenticated ? (
             <>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/profile" element={<MyProfile />} />
+              <Route path="/profile" element={<Profile />} />
             </>
           ) : (
             <>

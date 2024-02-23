@@ -130,6 +130,7 @@ export default function Registration() {
     }
 
     try {
+      // POST request to /api/credentials
       const response = await fetch("http://localhost:8000/api/credentials", {
         method: "POST",
         headers: {
@@ -137,14 +138,35 @@ export default function Registration() {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
         const result = await response.json();
         console.log(result);
-        setLoggedIn();
-        setUserEmail(formData.email);
-        history('/dashboard');
-        window.location.reload();
+        
+        const userDataForUsers = {
+          email: formData.email,
+          user_name: formData.name,
+          balance: 0,
+        };
+  
+        const userResponse = await fetch("http://localhost:8000/api/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userDataForUsers),
+        });
+  
+        if (userResponse.ok) {
+          console.log("User registered successfully!");
+          setLoggedIn();
+          setUserEmail(formData.email);
+          history('/dashboard');
+          window.location.reload();
+        } else {
+          const userResult = await userResponse.json();
+          console.error("Failed to create user:", userResult);
+        }
       } else {
         const result = await response.json();
         console.error(result);

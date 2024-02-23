@@ -39,14 +39,11 @@ export default function Navbar() {
   return (
     <>
       <nav className="absolute flex w-full p-8 bg-purple-500 top-0">
-        <div className="absolute top-0 right-0 m-4 space-x-4" ref={dropdownRef}>
+        <div className="absolute top-0 right-6 m-4 space-x-4" ref={dropdownRef}>
           {isAuthenticated ? (
             <div className="relative">
-              <button
-                className="text-white text-lg hover:underline"
-                onClick={toggleDropdown}
-              >
-                My Profile
+              <button className="invert" onClick={toggleDropdown} >
+                  <img src="user.svg" alt="user" className="w-7 h-7" />       
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-1 bg-white shadow-md rounded-md z-10">

@@ -93,14 +93,14 @@ function saveUserToDatabase(user) {
 
 app.post('/api/users', (req, res) => {
   try {
-    const { user_id, user_name, balance } = req.body;
+    const { email, user_name, balance } = req.body;
 
-    if (user_id === undefined || user_name === undefined || balance === undefined) {
+    if (email === undefined || user_name === undefined || balance === undefined) {
       throw new Error('Invalid request');
     }
 
     const user = {
-      user_id,
+      email,
       user_name,
       balance,
     };
@@ -108,6 +108,33 @@ app.post('/api/users', (req, res) => {
     saveUserToDatabase(user);
 
     res.status(201).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/users', (req, res) => {
+  try {
+    const userEmail = req.query.email;
+
+    if (!userEmail) {
+      res.status(400).json({ message: 'Email parameter is required' });
+      return;
+    }
+
+    const user = users_db.find(user => user.email === userEmail);
+
+    if (user) {
+      const responseModel = {
+        email: user.email,
+        user_name: user.user_name,
+        balance: user.balance,
+      };
+
+      res.status(200).json(responseModel);
+    } else {
+      res.status(404).json({ message: `User with email: ${userEmail} not found` });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -236,14 +263,14 @@ app.get('/api/wallets/:wallet_id', (req, res) => {
   try {
     const walletId = parseInt(req.params.wallet_id);
 
-    const walletUser = users_db.find(user => user.user_id === walletId);
+    const walletUser = users_db.find(user => user.email === walletId);
 
     if (walletUser) {
       const responseModel = {
         wallet_id: walletId,
         balance: walletUser.balance,
         wallet_user: {
-          user_id: walletUser.user_id,
+          email: walletUser.email,
           user_name: walletUser.user_name,
         },
       };
@@ -258,7 +285,7 @@ app.get('/api/wallets/:wallet_id', (req, res) => {
 });
 
 function updateWalletBalance(walletId, rechargeAmount) {
-  const user = users_db.find(user => user.user_id === walletId);
+  const user = users_db.find(user => user.email === walletId);
 
   if (user) {
     if (100 <= rechargeAmount && rechargeAmount <= 10000) {
@@ -286,10 +313,10 @@ app.put('/api/wallets/:wallet_id', (req, res) => {
 
     if (!('error' in updatedWallet)) {
       const responseModel = {
-        wallet_id: updatedWallet.user_id,
+        wallet_id: updatedWallet.email,
         balance: updatedWallet.balance,
         wallet_user: {
-          user_id: updatedWallet.user_id,
+          email: updatedWallet.email,
           user_name: updatedWallet.user_name,
         },
       };
@@ -380,7 +407,7 @@ app.post('/api/tickets', (req, res) => {
       throw new Error('Invalid request');
     }
 
-    const wallet = users_db.find(user => user.user_id === wallet_id);
+    const wallet = users_db.find(user => user.email === wallet_id);
 
     if (!wallet) {
       res.status(404).json({ message: `Wallet with id: ${wallet_id} was not found` });

@@ -74,7 +74,6 @@ export default function Login() {
                         ...prevErrors,
                         email: "User not found",
                     }));
-                    console.log(response);
                 }
                 if(response.status===403) {
                     setErrors((prevErrors) => ({
