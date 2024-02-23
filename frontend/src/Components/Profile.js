@@ -1,32 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import { getCurrentUserEmail, getLoggedInStatus } from "./Status";
 import Navbar from "./Navbar";
 
 const MyProfile = () => {
   const isAuthenticated = getLoggedInStatus();
-  const history = useNavigate();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        // Assume your API endpoint returns the user data directly
-        const response = await fetch("http://localhost:8000/api/user");
-        const result = await response.json();
-      } catch (error) {
-        console.error(error);
-        // Handle error fetching user data
-      }
-    };
-
-    if (isAuthenticated) {
-      fetchUserData();
-    } else {
-      // Redirect to login if not authenticated
-      history('/login');
-    }
-  }, [isAuthenticated, history]);
-
+  const userEmail = getCurrentUserEmail();
   return (
     <div>
       <Navbar />
@@ -35,8 +12,8 @@ const MyProfile = () => {
         {isAuthenticated && (
           <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
             {/* Display user information */}
-            <p>Name: {getCurrentUserEmail}</p>
-            <p>Email: {userData.email}</p>
+            <p>Name: {}</p>
+            <p>Email: {userEmail}</p>
             {/* Add more user information fields as needed */}
           </div>
         )}
