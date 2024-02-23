@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setLoggedIn } from './Status';
+import { setLoggedIn, setUserEmail } from './Status';
 import Navbar from './Navbar';
 
 export default function Login() {
@@ -64,6 +64,7 @@ export default function Login() {
 
             if (response.ok) {
                 setLoggedIn();
+                setUserEmail(formData.email);
                 console.log("Successful Login");    
                 history('/dashboard');
                 window.location.reload();

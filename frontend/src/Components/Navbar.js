@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import { isLoggedIn, setLoggedIn } from "./Status";
-import { getFirstName } from "./Status";
+import { clearUserStatus, getLoggedInStatus, setLoggedIn } from "./Status";
 
 export default function Navbar() {
-  const isAuthenticated = isLoggedIn();
+  const isAuthenticated = getLoggedInStatus();
   const history = useNavigate();
   const dropdownRef = useRef(null);
 
@@ -13,6 +12,7 @@ export default function Navbar() {
   const handleLogout = (event) => {
     event.preventDefault();
     setLoggedIn(false);
+    clearUserStatus();
     history('/login');
     window.location.reload();
     console.log("Logged out successfully");

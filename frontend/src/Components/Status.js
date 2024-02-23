@@ -1,9 +1,27 @@
-let status = JSON.parse(localStorage.getItem('isLoggedIn')) || false;
+let isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn')) || false;
+let userEmail = localStorage.getItem('userEmail') || '';
+
 export const setLoggedIn = () => {
-  status = !status;
-  localStorage.setItem('isLoggedIn', JSON.stringify(status));
+  isLoggedIn = !isLoggedIn;
+  localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
 };
 
-export const isLoggedIn = () => {
-  return status;
+export const setUserEmail = (email) => {
+  userEmail = email;
+  localStorage.setItem('userEmail', email);
+};
+
+export const clearUserStatus = () => {
+  isLoggedIn = false;
+  userEmail = '';
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('userEmail');
+};
+
+export const getLoggedInStatus = () => {
+  return isLoggedIn;
+};
+
+export const getCurrentUserEmail = () => {
+  return userEmail;
 };

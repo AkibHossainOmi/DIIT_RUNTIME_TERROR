@@ -1,18 +1,18 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Components/Login';
 import Registration from './Components/Registration';
 import Dashboard from './Components/Dashboard';
-import { isLoggedIn } from './Components/Status';
+import { getLoggedInStatus } from './Components/Status';
 import ForgotPassword from './ForgotPassword';
 import TrainList from './Components/TrainList';
 import Home from './Components/Home';
 import StationList from './Components/StationList';
 import Navbar from './Components/Navbar';
-import MyProfile from './Components/MyProfile';
+import MyProfile from './Components/Profile';
 
 function App() {
-  const isAuthenticated = isLoggedIn();
+  const isAuthenticated = getLoggedInStatus();
 
   return (
     <div className="font-roboto">
