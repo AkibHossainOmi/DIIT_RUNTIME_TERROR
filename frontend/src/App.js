@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Components/Login';
 import Registration from './Components/Registration';
 import Dashboard from './Components/Dashboard';
@@ -9,6 +9,7 @@ import TrainList from './Components/TrainList';
 import Home from './Components/Home';
 import StationList from './Components/StationList';
 import Navbar from './Components/Navbar';
+import MyProfile from './Components/MyProfile';
 
 function App() {
   const isAuthenticated = isLoggedIn();
@@ -25,6 +26,7 @@ function App() {
           {isAuthenticated ? (
             <>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<MyProfile />} />
             </>
           ) : (
             <>
@@ -33,7 +35,9 @@ function App() {
               <Route path="/registration" element={<Registration />} />
             </>
           )}
-          <Route path="*" element={<Navbar />} />
+          {/* Add a redirect to home if the route is not found */}
+          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/*" element={<Navbar />} />
         </Routes>
       </BrowserRouter>
     </div>
