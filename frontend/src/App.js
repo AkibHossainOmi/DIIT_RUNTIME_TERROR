@@ -35,8 +35,6 @@ function App() {
               <Route path="/registration" element={<Registration />} />
             </>
           )}
-          {/* Add a redirect to home if the route is not found */}
-          <Route path="*" element={<Navigate to="/" />} />
           <Route path="/*" element={<Navbar />} />
         </Routes>
       </BrowserRouter>
