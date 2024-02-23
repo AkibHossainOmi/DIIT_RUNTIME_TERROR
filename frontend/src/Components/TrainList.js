@@ -10,22 +10,22 @@ const TrainList = () => {
       const response = await fetch(`http://localhost:8000/api/stations/${stationId}/trains`);
       if (response.ok) {
         const result = await response.json();
-        return { stationId, trains: result.trains || [] };
+        return result.trains || [];
       } else {
         console.error(`Failed to fetch trains for station ${stationId}`);
-        return { stationId, trains: [] };
+        return [];
       }
     } catch (error) {
       console.error(`Error fetching trains for station ${stationId}:`, error);
-      return { stationId, trains: [] };
+      return [];
     }
   };
 
   const fetchDataForAllStations = async () => {
     const promises = stations.map(async (station) => {
       const { station_id, station_name } = station;
-      const trainsData = await fetchTrainsForStation(station_id);
-      return { station_id, station_name, trains: trainsData.trains };
+      const trains = await fetchTrainsForStation(station_id);
+      return { station_name, trains };
     });
 
     return await Promise.all(promises);
@@ -63,20 +63,35 @@ const TrainList = () => {
       <Navbar/>
       <div className="mt-20 ml-12">
         <h2>Trains at All Stations</h2>
-        {Array.isArray(dataForAllStations) &&
-          dataForAllStations.map(({ station_id, station_name, trains }) => (
-            <div key={station_id}>
-              <h3>{`Station ${station_id} - ${station_name}`}</h3>
-              <ul>
-                {Array.isArray(trains) &&
-                  trains.map((train) => (
-                    <li key={train.train_id}>
-                      {`Train ID: ${train.train_id}, Arrival Time: ${train.arrival_time}, Departure Time: ${train.departure_time}`}
-                    </li>
+        <table className="w-full border-collapse">
+          <thead>
+            <tr>
+              <th className="border border-gray-300 bg-gray-200 py-2 px-4">Station Name</th>
+              <th className="border border-gray-300 bg-gray-200 py-2 px-4">Train NAME</th>
+              <th className="border border-gray-300 bg-gray-200 py-2 px-4">Arrival Time</th>
+              <th className="border border-gray-300 bg-gray-200 py-2 px-4">Departure Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(dataForAllStations) &&
+              dataForAllStations.map(({ station_name, trains }) => (
+                <React.Fragment key={station_name}>
+                  <tr>
+                    <td className="border border-gray-300 py-2 px-4 text-center" rowSpan={trains.length + 1}>
+                      {station_name}
+                    </td>
+                  </tr>
+                  {trains.map((train) => (
+                    <tr key={train.train_name}>
+                      <td className="border border-gray-300 py-2 px-4 text-center">{train.train_name}</td>
+                      <td className="border border-gray-300 py-2 px-4 text-center">{train.arrival_time}</td>
+                      <td className="border border-gray-300 py-2 px-4 text-center">{train.departure_time}</td>
+                    </tr>
                   ))}
-              </ul>
-            </div>
-          ))}
+                </React.Fragment>
+              ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
