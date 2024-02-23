@@ -206,6 +206,7 @@ app.get('/api/stations/:station_id/trains', (req, res) => {
           if (stop.station_id === stationId) {
             const trainInfo = {
               train_id: train.train_id,
+              train_name: train.train_name,
               arrival_time: stop.arrival_time,
               departure_time: stop.departure_time,
             };
