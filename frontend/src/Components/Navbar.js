@@ -39,7 +39,7 @@ export default function Navbar() {
   return (
     <>
       <nav className="fixed flex w-full p-8 bg-purple-500 top-0 h-16 sm:h-16 md:h-16 lg:h-16 xl:h-16">
-        <div className="hidden sm:block absolute top-0 right-6 m-4 space-x-4" ref={dropdownRef}>
+        <div className="hidden sm:block absolute top-0 right-6 m-4 space-x-4">
           {isAuthenticated ? (
             <div className="relative">
               <button className="invert" onClick={toggleDropdown} >
@@ -93,7 +93,7 @@ export default function Navbar() {
           {/* Add more links as needed */}
         </div>
 
-        <div className="sm:hidden flex items-center w-full" ref={dropdownRef}>
+        <div className="sm:hidden flex items-center w-full">
           <button className="text-white" onClick={toggleDropdown}>
             ☰
           </button>
