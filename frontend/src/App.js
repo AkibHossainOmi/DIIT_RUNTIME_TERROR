@@ -35,7 +35,7 @@ function App() {
               <Route path="/registration" element={<Registration />} />
             </>
           )}
-          <Route path="/*" element={<Navbar />} />
+          <Route path="*" element={<Navbar />} />
         </Routes>
       </BrowserRouter>
     </div>
